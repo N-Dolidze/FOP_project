@@ -1,0 +1,6 @@
+INPUT "Enter a positive integer N: ", N
+SUM = 0
+FOR I = 1 TO N
+    SUM = SUM + I
+NEXT I
+PRINT "The sum of the first", N, "natural numbers is:", SUM
