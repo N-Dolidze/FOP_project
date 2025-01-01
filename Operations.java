@@ -1,4 +1,8 @@
+// import java.util.Map;
+// import java.util.HashMap;
+
 public class Operations {
+    //private static Map<String, Integer> intVariables = new HashMap<>();
     
     public static int evaluateExpression(String expression) {
         String[] tokens = expression.split("\\s+");
@@ -22,7 +26,7 @@ public class Operations {
     }
 
     public static int resolveValue(String token) {
-        if (handles.getIntvariables().containsKey(token)) {
+        if (handles.getIntvariables() != null && handles.getIntvariables().containsKey(token)) {
             return handles.getIntvariables().get(token);
         } else {
             try {
@@ -47,4 +51,9 @@ public class Operations {
             default -> throw new IllegalArgumentException("Unsupported operator: " + parts[1]);
         };
     }
+
+    // public static void storeIntVariable(String variableName, int value) {
+    //     intVariables.put(variableName, value);
+    // }
+
 }
