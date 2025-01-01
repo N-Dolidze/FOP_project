@@ -1,5 +1,6 @@
 public class Main {
     
+    //Processes gives string
     public static void process(String code) {
         String[] lines = code.split("\n");
         int i = 0;
@@ -17,12 +18,14 @@ public class Main {
                 i = handles.handleWhile(line, lines, i);
             } else if (line.startsWith("PRINT")) {
                 handles.handlePrint(line);
-            } else if (line.startsWith("dim")) {
+            } else if (line.startsWith("DIM")) {
                 handles.handleDim(line);
             } else if (line.contains("=")) {
                 handles.handleAssignment(line);
             } else if (line.startsWith("IF")) {
                 i = handles.handleIfElse(line, lines, i);
+            } else if (line.startsWith("INPUT")) {
+                handles.handleInput(line);
             }
             i++;
         }
@@ -36,4 +39,3 @@ public class Main {
 
     }
 }
-
