@@ -1,8 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 //class to handle some stuff from BASIC
 public class handles {
+    private static Scanner scanner = new Scanner(System.in);
     private static final Map<String, Integer> intVariables = new HashMap<>();
     private static final Map<String, String> stringVariables = new HashMap<>();
 
@@ -40,13 +42,38 @@ public class handles {
         }
     }
 
+    //handles INPUT
+    public static void handleInput(String line) {
+        String derivedLine = line.trim();
+        String[] parts = derivedLine.split(" ", 3);
+        // Assume structure is INPUT "Enter your number", X
+        if (parts.length == 3 && "INPUT".equalsIgnoreCase(parts[0])) {
+            String prompt = parts[1].replace("\"", ""); // remove quotes from the prompt
+            String variableName = parts[2];
+
+            // Display the prompt to the user and read the integer input
+            System.out.print(prompt + " ");
+            while (!scanner.hasNextInt()) {
+                scanner.next(); // skip non-integer input
+                System.out.print("Invalid input. " + prompt + " ");
+            }
+            int value = scanner.nextInt();
+
+            // Store the variable in the map
+            intVariables.put(variableName, value);
+        }
+    }
+
     //handles Printing
     public static void handlePrint(String line) {
-        String content = line.substring(5).trim();
-        String[] parts = content.split(";");
+        String content = line.substring(5).trim(); // Trim content
+        String[] parts = content.split(",");
         StringBuilder output = new StringBuilder();
         for (String part : parts) {
             part = part.trim();
+            if (part.isEmpty()) {
+                continue; // Skip empty parts
+            }
             if (stringVariables.containsKey(part)) {
                 output.append(stringVariables.get(part)).append(" ");
             } else if (intVariables.containsKey(part)) {
@@ -57,6 +84,7 @@ public class handles {
         }
         System.out.println(output.toString().trim());
     }
+    
 
     //handles for loop
     public static int handleFor(String line, String[] lines, int index) {
